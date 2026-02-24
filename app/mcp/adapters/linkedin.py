@@ -9,9 +9,11 @@ class LinkedInGetProfile(BaseMCPTool):
     name = "linkedin.get_profile"
     description = "Get the authenticated user's LinkedIn profile information."
     integration_id = "linkedin"
+    status = "coming_soon"
     input_schema = {"type": "object", "properties": {}}
 
     async def execute(self, params: dict, oauth_token: str) -> dict:
+        self._check_status()
         async with httpx.AsyncClient() as client:
             resp = await client.get(
                 f"{LINKEDIN_API}/userinfo",
@@ -26,6 +28,7 @@ class LinkedInCreatePost(BaseMCPTool):
     name = "linkedin.create_post"
     description = "Create a text post on the user's LinkedIn feed."
     integration_id = "linkedin"
+    status = "coming_soon"
     input_schema = {
         "type": "object",
         "properties": {
@@ -35,6 +38,7 @@ class LinkedInCreatePost(BaseMCPTool):
     }
 
     async def execute(self, params: dict, oauth_token: str) -> dict:
+        self._check_status()
         # first get the user's person URN
         async with httpx.AsyncClient() as client:
             me = await client.get(f"{LINKEDIN_API}/userinfo", headers={"Authorization": f"Bearer {oauth_token}"})

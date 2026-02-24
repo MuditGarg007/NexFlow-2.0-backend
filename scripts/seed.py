@@ -21,6 +21,7 @@ INTEGRATIONS = [
         "name": "GitHub",
         "provider": "github",
         "category": "Development",
+        "status": "coming_soon",
         "oauth_config": {
             "authorize_url": "https://github.com/login/oauth/authorize",
             "token_url": "https://github.com/login/oauth/access_token",
@@ -33,6 +34,7 @@ INTEGRATIONS = [
         "name": "Google Workspace",
         "provider": "google",
         "category": "Productivity",
+        "status": "stable",
         "oauth_config": {
             "authorize_url": "https://accounts.google.com/o/oauth2/v2/auth",
             "token_url": "https://oauth2.googleapis.com/token",
@@ -55,6 +57,7 @@ INTEGRATIONS = [
         "name": "LinkedIn",
         "provider": "linkedin",
         "category": "Social",
+        "status": "coming_soon",
         "oauth_config": {
             "authorize_url": "https://www.linkedin.com/oauth/v2/authorization",
             "token_url": "https://www.linkedin.com/oauth/v2/accessToken",

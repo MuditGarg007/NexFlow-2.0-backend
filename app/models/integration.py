@@ -15,3 +15,4 @@ class Integration(Base):
     oauth_config: Mapped[dict] = mapped_column(JSONB, nullable=False)
     available_tools: Mapped[list] = mapped_column(JSONB, default=list)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    status: Mapped[str] = mapped_column(String(20), default="stable")  # "stable" | "coming_soon" | "deprecated"

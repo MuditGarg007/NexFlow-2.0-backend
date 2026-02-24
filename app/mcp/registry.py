@@ -23,10 +23,12 @@ def get_all_tools() -> list[BaseMCPTool]:
     return list(_registry.values())
 
 
-def get_tools_as_openai_format(integration_ids: list[str] | None = None) -> list[dict]:
+def get_tools_as_openai_format(integration_ids: list[str] | None = None, include_coming_soon: bool = False) -> list[dict]:
     tools = _registry.values()
     if integration_ids:
         tools = [t for t in tools if t.integration_id in integration_ids]
+    if not include_coming_soon:
+        tools = [t for t in tools if t.status == "stable"]
     return [t.to_openai_tool() for t in tools]
 
 

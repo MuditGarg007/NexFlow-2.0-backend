@@ -9,6 +9,7 @@ class GitHubListRepos(BaseMCPTool):
     name = "github.list_repos"
     description = "List repositories for the authenticated GitHub user. Can filter by type (all, owner, member)."
     integration_id = "github"
+    status = "coming_soon"
     input_schema = {
         "type": "object",
         "properties": {
@@ -19,6 +20,7 @@ class GitHubListRepos(BaseMCPTool):
     }
 
     async def execute(self, params: dict, oauth_token: str) -> dict:
+        self._check_status()
         async with httpx.AsyncClient() as client:
             resp = await client.get(
                 f"{GITHUB_API}/user/repos",
@@ -34,6 +36,7 @@ class GitHubCreateIssue(BaseMCPTool):
     name = "github.create_issue"
     description = "Create a new issue in a GitHub repository."
     integration_id = "github"
+    status = "coming_soon"
     input_schema = {
         "type": "object",
         "properties": {
@@ -47,6 +50,7 @@ class GitHubCreateIssue(BaseMCPTool):
     }
 
     async def execute(self, params: dict, oauth_token: str) -> dict:
+        self._check_status()
         owner = params.pop("owner")
         repo = params.pop("repo")
         async with httpx.AsyncClient() as client:
@@ -64,6 +68,7 @@ class GitHubListPRs(BaseMCPTool):
     name = "github.list_pull_requests"
     description = "List pull requests for a GitHub repository."
     integration_id = "github"
+    status = "coming_soon"
     input_schema = {
         "type": "object",
         "properties": {
@@ -76,6 +81,7 @@ class GitHubListPRs(BaseMCPTool):
     }
 
     async def execute(self, params: dict, oauth_token: str) -> dict:
+        self._check_status()
         owner = params.pop("owner")
         repo = params.pop("repo")
         async with httpx.AsyncClient() as client:
@@ -93,6 +99,7 @@ class GitHubSearchRepos(BaseMCPTool):
     name = "github.search_repos"
     description = "Search GitHub repositories by query."
     integration_id = "github"
+    status = "coming_soon"
     input_schema = {
         "type": "object",
         "properties": {
@@ -103,6 +110,7 @@ class GitHubSearchRepos(BaseMCPTool):
     }
 
     async def execute(self, params: dict, oauth_token: str) -> dict:
+        self._check_status()
         async with httpx.AsyncClient() as client:
             resp = await client.get(
                 f"{GITHUB_API}/search/repositories",
