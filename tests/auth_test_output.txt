@@ -1,0 +1,52 @@
+F.FFF......                                                              [100%]
+================================== FAILURES ===================================
+___________________________ test_register_new_user ____________________________
+tests\test_service_auth.py:31: in test_register_new_user
+    user = await service.register("new@example.com", "password123", "NewUser")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\services\auth_service.py:27: in register
+    raise ValueError("Email already registered")
+E   ValueError: Email already registered
+_____________________________ test_login_success ______________________________
+tests\test_service_auth.py:59: in test_login_success
+    result = await service.login("test@example.com", "correct_password")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\services\auth_service.py:42: in login
+    if not user or not pwd_context.verify(password, user.hashed_password):
+                                                    ^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'coroutine' object has no attribute 'hashed_password'
+_______________________ test_login_invalid_email_raises _______________________
+tests\test_service_auth.py:73: in test_login_invalid_email_raises
+    await service.login("noone@example.com", "pass")
+app\services\auth_service.py:42: in login
+    if not user or not pwd_context.verify(password, user.hashed_password):
+                                                    ^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'coroutine' object has no attribute 'hashed_password'
+______________________ test_login_wrong_password_raises _______________________
+tests\test_service_auth.py:85: in test_login_wrong_password_raises
+    await service.login("test@example.com", "wrong_password")
+app\services\auth_service.py:42: in login
+    if not user or not pwd_context.verify(password, user.hashed_password):
+                                                    ^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'coroutine' object has no attribute 'hashed_password'
+============================== warnings summary ===============================
+tests/test_service_auth.py::test_register_new_user
+tests/test_service_auth.py::test_register_duplicate_email_raises
+  C:\Users\Mudit Garg\Desktop\Code\vibecode\nexflow\NexFlow\backend\app\services\auth_service.py:26: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
+    if result.scalar_one_or_none():
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+tests/test_service_auth.py::test_refresh_tokens_valid
+  C:\Users\Mudit Garg\Desktop\Code\vibecode\nexflow\NexFlow\backend\venv\Lib\site-packages\cryptography\hazmat\bindings\openssl\binding.py:51: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
+    setattr(conditional_lib, attr, getattr(lib, attr))
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_service_auth.py::test_register_new_user - ValueError: Email...
+FAILED tests/test_service_auth.py::test_login_success - AttributeError: 'coro...
+FAILED tests/test_service_auth.py::test_login_invalid_email_raises - Attribut...
+FAILED tests/test_service_auth.py::test_login_wrong_password_raises - Attribu...
+4 failed, 7 passed, 3 warnings in 2.57s

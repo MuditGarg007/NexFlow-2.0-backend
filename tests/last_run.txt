@@ -1,0 +1,12 @@
+........................................................................ [ 81%]
+................                                                         [100%]
+============================== warnings summary ===============================
+tests/test_service_integration.py::test_build_authorize_url_github
+tests/test_service_integration.py::test_build_authorize_url_google_has_extra_params
+  C:\Anaconda\Lib\asyncio\base_events.py:750: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
+    self._ready.clear()
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+88 passed, 2 warnings in 5.07s
