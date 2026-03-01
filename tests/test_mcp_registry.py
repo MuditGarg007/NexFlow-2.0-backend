@@ -9,6 +9,7 @@ class ConcreteTool:
     name = "test.do_something"
     description = "A test tool"
     integration_id = "testservice"
+    status = "stable"
     input_schema = {
         "type": "object",
         "properties": {

@@ -1,0 +1,65 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.9, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\Mudit Garg\Desktop\Code\vibecode\nexflow\NexFlow\backend\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Mudit Garg\Desktop\Code\vibecode\nexflow\NexFlow\backend
+configfile: pytest.ini
+plugins: anyio-4.12.1, langsmith-0.7.6, asyncio-1.3.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 18 items
+
+tests/test_mcp_registry.py::test_to_openai_tool_format PASSED            [  5%]
+tests/test_mcp_registry.py::test_tool_execute PASSED                     [ 11%]
+tests/test_mcp_registry.py::test_register_and_get_tool PASSED            [ 16%]
+tests/test_mcp_registry.py::test_get_tool_not_found PASSED               [ 22%]
+tests/test_mcp_registry.py::test_get_tools_for_integration PASSED        [ 27%]
+tests/test_mcp_registry.py::test_get_all_tools PASSED                    [ 33%]
+tests/test_mcp_registry.py::test_get_tools_as_openai_format_all FAILED   [ 38%]
+tests/test_mcp_registry.py::test_get_tools_as_openai_format_filtered FAILED [ 44%]
+tests/test_mcp_registry.py::test_get_tools_as_openai_format_empty_integration_list_returns_all FAILED [ 50%]
+tests/test_mcp_registry.py::test_register_tool_overwrites_same_name PASSED [ 55%]
+tests/test_routers.py::test_health_endpoint PASSED                       [ 61%]
+tests/test_routers.py::test_register_success PASSED                      [ 66%]
+tests/test_routers.py::test_register_duplicate_email_returns_409 PASSED  [ 72%]
+tests/test_routers.py::test_register_invalid_email_returns_422 PASSED    [ 77%]
+tests/test_routers.py::test_register_short_password_returns_422 PASSED   [ 83%]
+tests/test_routers.py::test_login_invalid_credentials_returns_401 PASSED [ 88%]
+tests/test_routers.py::test_me_endpoint_returns_user_data PASSED         [ 94%]
+tests/test_routers.py::test_refresh_invalid_token_returns_401 PASSED     [100%]
+
+================================== FAILURES ===================================
+_____________________ test_get_tools_as_openai_format_all _____________________
+tests\test_mcp_registry.py:116: in test_get_tools_as_openai_format_all
+    result = get_tools_as_openai_format()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\mcp\registry.py:31: in get_tools_as_openai_format
+    tools = [t for t in tools if t.status == "stable"]
+                                 ^^^^^^^^
+E   AttributeError: 'ConcreteTool' object has no attribute 'status'
+---------------------------- Captured stdout call -----------------------------
+2026-03-01 19:41:09 [info     ] tool_registered                integration=testservice tool=svc.t
+__________________ test_get_tools_as_openai_format_filtered ___________________
+tests\test_mcp_registry.py:135: in test_get_tools_as_openai_format_filtered
+    result = get_tools_as_openai_format(integration_ids=["github"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\mcp\registry.py:31: in get_tools_as_openai_format
+    tools = [t for t in tools if t.status == "stable"]
+                                 ^^^^^^^^
+E   AttributeError: 'ConcreteTool' object has no attribute 'status'
+---------------------------- Captured stdout call -----------------------------
+2026-03-01 19:41:09 [info     ] tool_registered                integration=github tool=gh.list_repos
+2026-03-01 19:41:09 [info     ] tool_registered                integration=google tool=gc.list_events
+_____ test_get_tools_as_openai_format_empty_integration_list_returns_all ______
+tests\test_mcp_registry.py:149: in test_get_tools_as_openai_format_empty_integration_list_returns_all
+    result = get_tools_as_openai_format(integration_ids=[])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\mcp\registry.py:31: in get_tools_as_openai_format
+    tools = [t for t in tools if t.status == "stable"]
+                                 ^^^^^^^^
+E   AttributeError: 'ConcreteTool' object has no attribute 'status'
+---------------------------- Captured stdout call -----------------------------
+2026-03-01 19:41:09 [info     ] tool_registered                integration=testservice tool=svc.x
+=========================== short test summary info ===========================
+FAILED tests/test_mcp_registry.py::test_get_tools_as_openai_format_all - Attr...
+FAILED tests/test_mcp_registry.py::test_get_tools_as_openai_format_filtered
+FAILED tests/test_mcp_registry.py::test_get_tools_as_openai_format_empty_integration_list_returns_all
+======================== 3 failed, 15 passed in 2.93s =========================

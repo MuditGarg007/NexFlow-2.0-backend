@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from sqlalchemy import text
 
 from app.database import engine
 from app.redis import redis_client
@@ -21,7 +22,7 @@ async def readiness():
 
     try:
         async with engine.connect() as conn:
-            await conn.execute("SELECT 1")
+            await conn.execute(text("SELECT 1"))
     except Exception:
         db_status = "error"
 

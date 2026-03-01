@@ -1,0 +1,8 @@
+register: 409 {"detail":"Email already registered"}
+login: 200
+readiness: 200 {'status': 'degraded', 'database': 'error', 'redis': 'ok', 'llm': 'ok'}
+google authorize status: 200
+google authorize URL: {'authorization_url': 'https://accounts.google.com/o/oauth2/v2/auth?client_id=126641385992-rep1e05ef1058b6q4mhblqc15avamavr.apps.googleusercontent.com&redirect_uri=http://localhost:3000/api/v1/integrations/google/oauth/callback&scope=https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/photoslibrary.readonly openid email profile&state=er--sG1OSNP9e8GU9AsZT-zz83I5kxMYDf56anh_UEI&response_type=code&access_type=offline&prompt=consent'}
+google tools status: 200
+google tools: ['gmail.list_emails', 'gmail.send_email', 'gmail.read_email', 'google_calendar.list_events', 'google_calendar.create_event', 'google_drive.list_files', 'google_drive.search_files', 'google_photos.list_albums', 'google_photos.search_photos']
+unknown integration: 400 {"detail":"Unknown integration: unknownprovider"}
