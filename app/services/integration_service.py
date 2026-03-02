@@ -132,15 +132,37 @@ class IntegrationService:
         expires_in = tokens.get("expires_in")
 
         import uuid
-        connection = OAuthConnection(
-            user_id=uuid.UUID(user_id),
-            integration_id=integration_id,
-            access_token_encrypted=encrypt_token(access_token),
-            refresh_token_encrypted=encrypt_token(refresh_token) if refresh_token else None,
-            token_expires_at=datetime.now(timezone.utc).replace(second=0) if not expires_in else None,
-            scopes=config["scopes"],
+        from sqlalchemy import select
+
+        expires_at = None
+        if expires_in:
+            from datetime import timedelta
+            expires_at = datetime.now(timezone.utc) + timedelta(seconds=int(expires_in))
+
+        result = await self.db.execute(
+            select(OAuthConnection).where(
+                OAuthConnection.user_id == uuid.UUID(user_id),
+                OAuthConnection.integration_id == integration_id,
+            )
         )
-        self.db.add(connection)
+        connection = result.scalar_one_or_none()
+
+        if connection:
+            connection.access_token_encrypted = encrypt_token(access_token)
+            connection.refresh_token_encrypted = encrypt_token(refresh_token) if refresh_token else None
+            connection.token_expires_at = expires_at
+            connection.scopes = config["scopes"]
+        else:
+            connection = OAuthConnection(
+                user_id=uuid.UUID(user_id),
+                integration_id=integration_id,
+                access_token_encrypted=encrypt_token(access_token),
+                refresh_token_encrypted=encrypt_token(refresh_token) if refresh_token else None,
+                token_expires_at=expires_at,
+                scopes=config["scopes"],
+            )
+            self.db.add(connection)
+
         await self.db.flush()
         logger.info("oauth_connected", user_id=user_id, integration=integration_id)
         return connection
