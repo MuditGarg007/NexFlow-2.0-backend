@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     LINKEDIN_CLIENT_SECRET: str = ""
 
     FRONTEND_URL: str = "http://localhost:3000"
+    BACKEND_URL: str = "http://localhost:8000"
     ALLOWED_ORIGINS: str = "http://localhost:3000"
 
     RATE_LIMIT_CHAT: int = 30

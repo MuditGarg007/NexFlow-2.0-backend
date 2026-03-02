@@ -76,7 +76,7 @@ class IntegrationService:
 
         client_id = getattr(settings, config["client_id_key"])
         scopes = " ".join(config["scopes"])
-        callback_url = f"{settings.FRONTEND_URL}/api/v1/integrations/{integration_id}/oauth/callback"
+        callback_url = f"{settings.BACKEND_URL}/api/v1/integrations/{integration_id}/oauth/callback"
 
         params = {
             "client_id": client_id,
@@ -107,7 +107,7 @@ class IntegrationService:
         config = OAUTH_CONFIGS[integration_id]
         client_id = getattr(settings, config["client_id_key"])
         client_secret = getattr(settings, config["client_secret_key"])
-        callback_url = f"{settings.FRONTEND_URL}/api/v1/integrations/{integration_id}/oauth/callback"
+        callback_url = f"{settings.BACKEND_URL}/api/v1/integrations/{integration_id}/oauth/callback"
 
         async with httpx.AsyncClient() as client:
             token_data = {
