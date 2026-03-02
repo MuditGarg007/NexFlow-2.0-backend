@@ -36,9 +36,14 @@ class LLMClient:
         kwargs = {
             "model": model or self.default_model,
             "messages": messages,
-            "temperature": temperature,
             "stream": stream,
         }
+
+        resolved_model = kwargs["model"]
+        no_temperature_models = ("o1", "o3", "o4", "gpt-5")
+        if not any(resolved_model.startswith(m) for m in no_temperature_models):
+            kwargs["temperature"] = temperature
+
         if tools:
             kwargs["tools"] = tools
             kwargs["tool_choice"] = "auto"
