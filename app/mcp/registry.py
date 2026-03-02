@@ -12,7 +12,9 @@ def register_tool(tool: BaseMCPTool):
 
 
 def get_tool(name: str) -> BaseMCPTool | None:
-    return _registry.get(name)
+    if name in _registry:
+        return _registry[name]
+    return next((t for t in _registry.values() if t.openai_name == name), None)
 
 
 def get_tools_for_integration(integration_id: str) -> list[BaseMCPTool]:

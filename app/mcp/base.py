@@ -21,11 +21,15 @@ class BaseMCPTool(ABC):
         """Execute the tool with given parameters and OAuth token."""
         ...
 
+    @property
+    def openai_name(self) -> str:
+        return self.name.replace(".", "_")
+
     def to_openai_tool(self) -> dict:
         return {
             "type": "function",
             "function": {
-                "name": self.name,
+                "name": self.openai_name,
                 "description": f"[COMING SOON] {self.description}" if self.status == "coming_soon" else self.description,
                 "parameters": self.input_schema,
             },
