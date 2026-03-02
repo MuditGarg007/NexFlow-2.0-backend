@@ -20,4 +20,5 @@ class ErrorHandlerMiddleware(BaseHTTPMiddleware):
                     "status": 500,
                     "detail": "An unexpected error occurred.",
                 },
+                headers={"Access-Control-Allow-Origin": "*"},
             )
