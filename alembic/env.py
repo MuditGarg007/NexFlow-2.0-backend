@@ -12,6 +12,10 @@ from app.database import Base
 from app.models import *  # noqa — import all models so Alembic sees them
 
 config = context.config
+
+from app.config import get_settings
+config.set_main_option("sqlalchemy.url", get_settings().DATABASE_URL)
+
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
