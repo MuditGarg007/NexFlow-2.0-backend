@@ -28,9 +28,9 @@ class Settings(BaseSettings):
     LINKEDIN_CLIENT_ID: str = ""
     LINKEDIN_CLIENT_SECRET: str = ""
 
-    FRONTEND_URL: str = "http://localhost:3000"
+    FRONTEND_URL: str = "http://localhost:5173"
     BACKEND_URL: str = "https://nexflow-2-0-backend.onrender.com"
-    ALLOWED_ORIGINS: str = "http://localhost:3000"
+    ALLOWED_ORIGINS: str = "http://localhost:5173"
 
     RATE_LIMIT_CHAT: int = 30
     RATE_LIMIT_AUTH: int = 5
