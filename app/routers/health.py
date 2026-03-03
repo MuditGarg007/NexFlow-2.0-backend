@@ -1,17 +1,36 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 from sqlalchemy import text
 
 from app.database import engine
 from app.redis import redis_client
-from app.services.llm_client import get_llm_client
 from app.schemas.common import HealthResponse, ReadinessResponse
 
 router = APIRouter(prefix="/api/v1", tags=["health"])
 
 
-@router.api_route("/health", methods=["GET", "HEAD"], response_model=HealthResponse)
+@router.api_route("/health", methods=["GET", "HEAD"])
 async def health():
-    return HealthResponse(status="ok")
+    db_status = "ok"
+    redis_status = "ok"
+
+    try:
+        async with engine.connect() as conn:
+            await conn.execute(text("SELECT 1"))
+    except Exception:
+        db_status = "error"
+
+    try:
+        await redis_client.ping()
+    except Exception:
+        redis_status = "error"
+
+    all_healthy = all(s == "ok" for s in [db_status, redis_status])
+    overall = "ok" if all_healthy else "degraded"
+    status_code = 200 if all_healthy else 503
+
+    body = HealthResponse(status=overall, database=db_status, redis=redis_status)
+    return JSONResponse(content=body.model_dump(), status_code=status_code)
 
 
 @router.get("/health/ready", response_model=ReadinessResponse)
@@ -32,8 +51,8 @@ async def readiness():
         redis_status = "error"
 
     try:
+        from app.services.llm_client import get_llm_client
         llm = get_llm_client()
-        # just verify client is instantiated, don't make a real call
         if not llm.client.api_key:
             llm_status = "not_configured"
     except Exception:

@@ -13,6 +13,8 @@ class ErrorResponse(BaseModel):
 class HealthResponse(BaseModel):
     status: str
     version: str = "1.0.0"
+    database: str = "unknown"
+    redis: str = "unknown"
 
 
 class ReadinessResponse(BaseModel):
