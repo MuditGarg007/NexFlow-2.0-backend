@@ -44,7 +44,10 @@ def test_health_endpoint():
     mock_conn.__aenter__ = AsyncMock(return_value=mock_conn)
     mock_conn.__aexit__ = AsyncMock(return_value=False)
 
-    with patch("app.routers.health.engine.connect", return_value=mock_conn), \
+    mock_engine = MagicMock()
+    mock_engine.connect.return_value = mock_conn
+
+    with patch("app.routers.health.engine", mock_engine), \
          patch("app.routers.health.redis_client.ping", new=AsyncMock()):
         resp = client.get("/api/v1/health")
 
