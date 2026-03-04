@@ -38,9 +38,21 @@ def _fake_user():
 def test_health_endpoint():
     app = _make_app()
     client = TestClient(app)
-    resp = client.get("/api/v1/health")
+
+    mock_conn = AsyncMock()
+    mock_conn.execute = AsyncMock()
+    mock_conn.__aenter__ = AsyncMock(return_value=mock_conn)
+    mock_conn.__aexit__ = AsyncMock(return_value=False)
+
+    with patch("app.routers.health.engine.connect", return_value=mock_conn), \
+         patch("app.routers.health.redis_client.ping", new=AsyncMock()):
+        resp = client.get("/api/v1/health")
+
     assert resp.status_code == 200
-    assert resp.json()["status"] == "ok"
+    data = resp.json()
+    assert data["status"] == "ok"
+    assert data["database"] == "ok"
+    assert data["redis"] == "ok"
 
 
 # ── /api/v1/auth/register ─────────────────────────────────────────────────────
