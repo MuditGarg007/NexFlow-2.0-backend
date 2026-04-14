@@ -20,6 +20,7 @@ router = APIRouter(prefix="/api/v1/integrations", tags=["integrations"])
 async def list_integrations(user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     service = IntegrationService(db)
     all_integrations = await service.list_all()
+    all_integrations = [i for i in all_integrations if i.provider != "linkedin"]  # TODO: remove when LinkedIn is ready
     connected_ids = await service.get_connected_integration_ids(user.id)
     return [
         IntegrationResponse(
