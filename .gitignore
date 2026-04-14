@@ -12,5 +12,6 @@ build/
 .eggs/
 *.egg
 .mypy_cache/
-.pytest_cache/
+.pytest_cache/  
 .ruff_cache/
+todo.txt

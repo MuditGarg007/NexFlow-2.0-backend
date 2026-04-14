@@ -9,7 +9,7 @@ class GitHubListRepos(BaseMCPTool):
     name = "github.list_repos"
     description = "List repositories for the authenticated GitHub user. Can filter by type (all, owner, member)."
     integration_id = "github"
-    status = "coming_soon"
+    status = "stable"
     input_schema = {
         "type": "object",
         "properties": {
@@ -36,7 +36,7 @@ class GitHubCreateIssue(BaseMCPTool):
     name = "github.create_issue"
     description = "Create a new issue in a GitHub repository."
     integration_id = "github"
-    status = "coming_soon"
+    status = "stable"
     input_schema = {
         "type": "object",
         "properties": {
@@ -68,7 +68,7 @@ class GitHubListPRs(BaseMCPTool):
     name = "github.list_pull_requests"
     description = "List pull requests for a GitHub repository."
     integration_id = "github"
-    status = "coming_soon"
+    status = "stable"
     input_schema = {
         "type": "object",
         "properties": {
@@ -99,7 +99,7 @@ class GitHubSearchRepos(BaseMCPTool):
     name = "github.search_repos"
     description = "Search GitHub repositories by query."
     integration_id = "github"
-    status = "coming_soon"
+    status = "stable"
     input_schema = {
         "type": "object",
         "properties": {
